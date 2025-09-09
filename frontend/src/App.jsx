@@ -1,0 +1,23 @@
+import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import Rooms from "./pages/Rooms";
+import Reservations from "./pages/Reservations";
+
+function App() {
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/rooms" element={<Rooms />} />
+          <Route path="/reservations" element={<Reservations />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
+}
+export default App
