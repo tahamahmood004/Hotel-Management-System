@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
 import api from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
 
@@ -19,17 +20,40 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-        <input
-          type="password"
-          placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Login</button>
-      </form>
-    </div>
+  <div className="d-flex justify-content-center align-items-center vh-100">
+    <Card style={{ width: "100%", maxWidth: "400px" }} className="p-4 shadow-sm">
+      <h3 className="text-center mb-3">Login</h3>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Enter email"
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Enter password"
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </Form.Group>
+
+        <Button variant="primary" type="submit" className="w-100">
+          Login
+        </Button>
+      </Form>
+
+      <p className="text-center mt-3">
+        Don’t have an account? <a href="/register">Register</a>
+      </p>
+    </Card>
+  </div>
+
   );
 }
