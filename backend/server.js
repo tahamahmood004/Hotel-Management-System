@@ -1,6 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import path from "path";
+import { fileURLToPath } from "url";
 import cors from "cors";
 
 import authRoutes from "./routes/authRoutes.js";
@@ -10,6 +12,12 @@ import invoiceRoutes from "./routes/invoiceRoutes.js";
 
 dotenv.config();
 const app = express();
+
+//upload images
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+
 
 // Middleware
 app.use(express.json());
