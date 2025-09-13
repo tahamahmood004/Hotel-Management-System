@@ -1,6 +1,17 @@
 import Reservation from "../models/Reservation.js";
 import Room from "../models/Room.js";
 
+export const getReservations = async (req, res) => {
+  try {
+    const reservations = await Reservation.find()
+      .populate("user", "name email")
+      .populate("room", "roomNumber type");
+    res.json(reservations);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 export const createReservation = async (req, res) => {
   try {
     const { user, room, checkIn, checkOut } = req.body;

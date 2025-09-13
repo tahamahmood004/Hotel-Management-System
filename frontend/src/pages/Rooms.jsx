@@ -141,7 +141,13 @@ export default function Rooms() {
         <tbody>
           {rooms.map((room) => (
             <tr key={room._id}>
-              <td>{room.roomNumber}</td>
+              <td>{room.roomNumber}
+                  {room.reservationId && (
+                    <div className="text-muted small">
+                      Reserved → {room.reservationId}
+                      </div>
+                    )}
+              </td>
               <td>{room.type}</td>
               <td>${room.price}</td>
               <td>{room.status}</td>

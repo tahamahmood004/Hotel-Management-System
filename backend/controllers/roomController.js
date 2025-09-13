@@ -1,4 +1,5 @@
 import Room from "../models/Room.js";
+import Reservation from "../models/Reservation.js";
 
 // Create Room
 export const createRoom = async (req, res) => {
@@ -28,11 +29,25 @@ export const createRoom = async (req, res) => {
   }
 };
 
-// Get all Rooms
+// Get all rooms with reservation info
 export const getRooms = async (req, res) => {
   try {
+    // Fetch rooms
     const rooms = await Room.find();
-    res.json(rooms);
+
+    // For each room, check if reserved
+    const roomsWithReservation = await Promise.all(
+      rooms.map(async (room) => {
+        const reservation = await Reservation.findOne({ room: room._id }).populate("user", "name email");
+        return {
+          ...room._doc,
+          reservationId: reservation ? reservation._id : null,
+          reservedBy: reservation ? reservation.user : null,
+        };
+      })
+    );
+
+    res.json(roomsWithReservation);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
