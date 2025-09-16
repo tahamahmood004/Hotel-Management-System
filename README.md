@@ -68,7 +68,7 @@ Hotel-Management-System/
 ### 1️⃣ Clone Repository
 
 ```bash
-git clone https://github.com/your-username/Hotel-Management-System.git
+git clone https://github.com/tahamahmood004/Hotel-Management-System.git
 cd Hotel-Management-System
 ```
 
