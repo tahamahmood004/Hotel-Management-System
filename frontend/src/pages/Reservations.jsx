@@ -150,6 +150,26 @@ export default function Reservations() {
                   >
                     Delete
                   </Button>
+                  <Button
+                    variant="info"
+                    size="sm"
+                    className="me-2"
+                    onClick={async () => {
+                      try {
+                        const res = await api.put(`/reservations/${r._id}/checkout`, {}, {
+                          headers: { Authorization: `Bearer ${token}` },
+                        });
+                        alert("Checkout successful! Invoice generated.");
+                        console.log("Invoice:", res.data.invoice); // 👈 for now, log it
+                        fetchReservations();
+                      } catch (err) {
+                        alert(err.response?.data?.error || "Error during checkout");
+                      }
+                    }}
+                  >
+                    Checkout
+                  </Button>
+
                 </td>
               </tr>
             ))

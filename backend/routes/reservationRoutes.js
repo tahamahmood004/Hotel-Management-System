@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.post("/", createReservation);
 router.get("/", getReservations);
-router.put("/checkout/:id", checkoutReservation);
+router.put("/:id/checkout", checkoutReservation);
 router.put("/:id", updateReservation);
 router.delete("/:id", deleteReservation);
 

@@ -11,6 +11,10 @@ const reservationSchema = new mongoose.Schema(
       enum: ["booked", "checked-in", "checked-out", "cancelled"],
       default: "booked",
     },
+    totalAmount: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

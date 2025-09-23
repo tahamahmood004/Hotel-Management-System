@@ -47,25 +47,43 @@ export const createReservation = async (req, res) => {
   }
 };
 
-// Update reservation
+// Checkout reservation
 export const checkoutReservation = async (req, res) => {
   try {
     const { id } = req.params;
-    const reservation = await Reservation.findByIdAndUpdate(
-      id,
-      { status: "checked-out" },
-      { new: true }
-    );
 
-    if (reservation) {
-      await Room.findByIdAndUpdate(reservation.room, { status: "available" });
-    }
+    // Find reservation and populate room (to get price)
+    const reservation = await Reservation.findById(id).populate("room");
+    if (!reservation) return res.status(404).json({ error: "Reservation not found" });
 
-    res.json(reservation);
+    // Calculate stay duration
+    const checkInDate = new Date(reservation.checkIn);
+    const checkOutDate = new Date(reservation.checkOut);
+    const nights = Math.ceil((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
+
+    const total = reservation.room.price * nights;
+
+    reservation.status = "checked-out";
+    reservation.totalAmount = total;
+    await reservation.save();
+
+    res.json({
+      message: "Checkout successful",
+      invoice: {
+        reservationId: reservation._id,
+        guest: reservation.user,
+        room: reservation.room,
+        checkIn: reservation.checkIn,
+        checkOut: reservation.checkOut,
+        nights,
+        total,
+      },
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+
 
 // Update reservation
 export const updateReservation = async (req, res) => {

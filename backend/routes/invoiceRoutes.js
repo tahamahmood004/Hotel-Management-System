@@ -3,6 +3,7 @@ import { generateInvoice } from "../controllers/invoiceController.js";
 
 const router = express.Router();
 
-router.post("/:reservationId", generateInvoice);
+// ✅ Fetch invoice for a reservation
+router.get("/:reservationId", generateInvoice);
 
 export default router;
