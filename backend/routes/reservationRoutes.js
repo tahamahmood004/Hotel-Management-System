@@ -3,6 +3,8 @@ import {
   createReservation,
   getReservations,
   checkoutReservation,
+  updateReservation,
+  deleteReservation
 } from "../controllers/reservationController.js";
 
 const router = express.Router();
@@ -10,5 +12,7 @@ const router = express.Router();
 router.post("/", createReservation);
 router.get("/", getReservations);
 router.put("/checkout/:id", checkoutReservation);
+router.put("/:id", updateReservation);
+router.delete("/:id", deleteReservation);
 
 export default router;
