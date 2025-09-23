@@ -4,6 +4,7 @@ import api from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
 import NewReservation from "./NewReservation";
 import EditReservation from "./EditReservation";
+import { useNavigate } from "react-router-dom";
 
 export default function Reservations() {
   const { token } = useContext(AuthContext);
@@ -13,6 +14,7 @@ export default function Reservations() {
   const [showNewModal, setShowNewModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedReservation, setSelectedReservation] = useState(null);
+  const navigate = useNavigate();
 
   const fetchReservations = async () => {
     try {
@@ -160,6 +162,7 @@ export default function Reservations() {
                           headers: { Authorization: `Bearer ${token}` },
                         });
                         alert("Checkout successful! Invoice generated.");
+                        navigate(`/invoices/${r._id}`);
                         console.log("Invoice:", res.data.invoice); // 👈 for now, log it
                         fetchReservations();
                       } catch (err) {
