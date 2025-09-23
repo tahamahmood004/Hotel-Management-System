@@ -26,7 +26,7 @@ export default function NewReservation({ show, handleClose, onSuccess }) {
 
     const fetchUsers = async () => {
       if (user?.role === "admin" || user?.role === "receptionist") {
-        const res = await api.get("/users", {
+        const res = await api.get("/users?role=guest", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUsers(res.data);
@@ -66,6 +66,7 @@ const handleSubmit = async (e) => {
 
     //console log for debug
     console.log("Reservation created successfully!");
+    alert("Reservation created successfully!");
     onSuccess(); // refresh reservations list
     handleClose();
   } catch (err) {

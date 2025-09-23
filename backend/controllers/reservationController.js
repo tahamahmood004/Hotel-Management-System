@@ -18,10 +18,28 @@ export const createReservation = async (req, res) => {
   try {
     const { user, room, checkIn, checkOut } = req.body;
 
-    const reservation = new Reservation({ user, room, checkIn, checkOut });
-    await reservation.save();
+    if (!user || !room || !checkIn || !checkOut) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
 
-    await Room.findByIdAndUpdate(room, { status: "booked" });
+    // ✅ Check if room is already reserved in the same date range
+    const overlapping = await Reservation.findOne({
+      room,
+      $or: [
+        {
+          checkIn: { $lte: checkOut },
+          checkOut: { $gte: checkIn },
+        },
+      ],
+      status: { $ne: "cancelled" }, // cancelled rooms don’t block new reservations
+    });
+
+    if (overlapping) {
+      return res.status(400).json({ error: "Room already reserved for these dates" });
+    }
+
+    const reservation = new Reservation({ user, room, checkIn, checkOut, status: "booked" });
+    await reservation.save();
 
     res.status(201).json(reservation);
   } catch (err) {
