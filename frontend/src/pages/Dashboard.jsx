@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { FaBed, FaCalendarCheck, FaSignOutAlt } from "react-icons/fa";
+import { FaBed, FaUsers , FaCalendarCheck, FaSignOutAlt } from "react-icons/fa";
 
 export default function Dashboard() {
   const { user, logout } = useContext(AuthContext);
@@ -27,6 +27,13 @@ export default function Dashboard() {
       icon: <FaCalendarCheck size={40} className="mb-3 text-success" />,
       action: () => navigate("/reservations"),
       variant: "success",
+    },
+    {
+      title: "Users",
+      text: "View and manage all Users.",
+      icon: <FaUsers size={40} className="mb-3 text-info" />,
+      action: () => navigate("/users"),
+      variant: "info",
     },
   ];
 
