@@ -2,7 +2,14 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { FaBed, FaUsers , FaCalendarCheck, FaSignOutAlt } from "react-icons/fa";
+import {
+  FaBed,
+  FaCalendarCheck,
+  FaUsers,
+  FaBroom,
+  FaTools,
+  FaSignOutAlt,
+} from "react-icons/fa";
 
 export default function Dashboard() {
   const { user, logout } = useContext(AuthContext);
@@ -30,24 +37,24 @@ export default function Dashboard() {
     },
     {
       title: "Users",
-      text: "View and manage all Users.",
+      text: "Manage registered users and roles.",
       icon: <FaUsers size={40} className="mb-3 text-info" />,
       action: () => navigate("/users"),
       variant: "info",
     },
     {
       title: "Housekeeping",
-      text: "View and manage all Housekeeping Tasks.",
-      icon: <FaUsers size={40} className="mb-3 text-info" />,
+      text: "Track and manage housekeeping tasks.",
+      icon: <FaBroom size={40} className="mb-3 text-warning" />,
       action: () => navigate("/housekeeping"),
-      variant: "info",
+      variant: "warning",
     },
-        {
+    {
       title: "Maintenance",
-      text: "View and manage all Room Maintenance.",
-      icon: <FaUsers size={40} className="mb-3 text-info" />,
+      text: "Report and resolve maintenance issues.",
+      icon: <FaTools size={40} className="mb-3 text-danger" />,
       action: () => navigate("/maintenance"),
-      variant: "info",
+      variant: "danger",
     },
   ];
 
