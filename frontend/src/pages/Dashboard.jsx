@@ -35,6 +35,20 @@ export default function Dashboard() {
       action: () => navigate("/users"),
       variant: "info",
     },
+    {
+      title: "Housekeeping",
+      text: "View and manage all Housekeeping Tasks.",
+      icon: <FaUsers size={40} className="mb-3 text-info" />,
+      action: () => navigate("/housekeeping"),
+      variant: "info",
+    },
+        {
+      title: "Maintenance",
+      text: "View and manage all Room Maintenance.",
+      icon: <FaUsers size={40} className="mb-3 text-info" />,
+      action: () => navigate("/maintenance"),
+      variant: "info",
+    },
   ];
 
   return (

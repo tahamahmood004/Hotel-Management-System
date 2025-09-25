@@ -10,6 +10,10 @@ import roomRoutes from "./routes/roomRoutes.js";
 import reservationRoutes from "./routes/reservationRoutes.js";
 import invoiceRoutes from "./routes/invoiceRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import housekeepingRoutes from "./routes/housekeepingRoutes.js";
+import maintenanceRoutes from "./routes/maintenanceRoutes.js";
+
+
 
 dotenv.config();
 const app = express();
@@ -30,6 +34,8 @@ app.use("/api/rooms", roomRoutes);
 app.use("/api/reservations", reservationRoutes);
 app.use("/api/invoices", invoiceRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/housekeeping", housekeepingRoutes);
+app.use("/api/maintenance", maintenanceRoutes);
 
 // MongoDB Connection
 mongoose
