@@ -162,9 +162,7 @@ export default function Reservations() {
                           headers: { Authorization: `Bearer ${token}` },
                         });
                         alert("Checkout successful! Invoice generated.");
-                        navigate(`/invoices/${r._id}`);
-                        console.log("Invoice:", res.data.invoice); // 👈 for now, log it
-                        fetchReservations();
+                        navigate(`/invoices/${res.data.invoiceId}`);
                       } catch (err) {
                         alert(err.response?.data?.error || "Error during checkout");
                       }

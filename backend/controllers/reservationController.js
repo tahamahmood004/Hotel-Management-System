@@ -1,5 +1,6 @@
 import Reservation from "../models/Reservation.js";
 import Room from "../models/Room.js";
+import Invoice from "../models/Invoice.js";
 
 // get reservations from mongoDB
 export const getReservations = async (req, res) => {
@@ -35,10 +36,18 @@ export const createReservation = async (req, res) => {
     });
 
     if (overlapping) {
-      return res.status(400).json({ error: "Room already reserved for these dates" });
+      return res
+        .status(400)
+        .json({ error: "Room already reserved for these dates" });
     }
 
-    const reservation = new Reservation({ user, room, checkIn, checkOut, status: "booked" });
+    const reservation = new Reservation({
+      user,
+      room,
+      checkIn,
+      checkOut,
+      status: "booked",
+    });
     await reservation.save();
 
     res.status(201).json(reservation);
@@ -52,38 +61,40 @@ export const checkoutReservation = async (req, res) => {
   try {
     const { id } = req.params;
 
-    // Find reservation and populate room (to get price)
-    const reservation = await Reservation.findById(id).populate("room");
-    if (!reservation) return res.status(404).json({ error: "Reservation not found" });
+    const reservation = await Reservation.findById(id)
+      .populate("room")
+      .populate("user");
+    if (!reservation) {
+      return res.status(404).json({ error: "Reservation not found" });
+    }
 
-    // Calculate stay duration
+    // calculate nights
     const checkInDate = new Date(reservation.checkIn);
     const checkOutDate = new Date(reservation.checkOut);
-    const nights = Math.ceil((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
-
+    const nights = Math.ceil(
+      (checkOutDate - checkInDate) / (1000 * 60 * 60 * 24)
+    );
     const total = reservation.room.price * nights;
 
+    // mark reservation checked-out
     reservation.status = "checked-out";
-    reservation.totalAmount = total;
     await reservation.save();
+
+    // create invoice
+    const invoice = new Invoice({
+      reservation: reservation._id,
+      amount: total,
+    });
+    await invoice.save();
 
     res.json({
       message: "Checkout successful",
-      invoice: {
-        reservationId: reservation._id,
-        guest: reservation.user,
-        room: reservation.room,
-        checkIn: reservation.checkIn,
-        checkOut: reservation.checkOut,
-        nights,
-        total,
-      },
+      invoiceId: invoice._id, // 👈 return invoice id
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
-
 
 // Update reservation
 export const updateReservation = async (req, res) => {
