@@ -27,6 +27,7 @@ export default function Dashboard() {
       icon: <FaBed size={40} className="mb-3 text-primary" />,
       action: () => navigate("/rooms"),
       variant: "primary",
+      roles: ["admin", "receptionist"], // ✅ visible for admin & receptionist
     },
     {
       title: "Reservations",
@@ -34,6 +35,7 @@ export default function Dashboard() {
       icon: <FaCalendarCheck size={40} className="mb-3 text-success" />,
       action: () => navigate("/reservations"),
       variant: "success",
+      roles: ["admin", "receptionist", "guest"], // ✅ all roles can see
     },
     {
       title: "Users",
@@ -41,6 +43,7 @@ export default function Dashboard() {
       icon: <FaUsers size={40} className="mb-3 text-info" />,
       action: () => navigate("/users"),
       variant: "info",
+      roles: ["admin"], // ✅ only admin sees
     },
     {
       title: "Housekeeping",
@@ -48,6 +51,8 @@ export default function Dashboard() {
       icon: <FaBroom size={40} className="mb-3 text-warning" />,
       action: () => navigate("/housekeeping"),
       variant: "warning",
+      roles: ["admin", "receptionist"], // ✅ admin & receptionist
+
     },
     {
       title: "Maintenance",
@@ -55,6 +60,7 @@ export default function Dashboard() {
       icon: <FaTools size={40} className="mb-3 text-danger" />,
       action: () => navigate("/maintenance"),
       variant: "danger",
+      roles: ["admin", "receptionist"], // ✅ admin & receptionist
     },
   ];
 
@@ -72,7 +78,9 @@ export default function Dashboard() {
       </div>
 
       <Row xs={1} md={2} className="g-4">
-        {cards.map((card, idx) => (
+        {cards
+        .filter((card) => card.roles.includes(user?.role)) // ✅ role filter
+        .map((card, idx) => (
           <Col key={idx}>
             <Card className="h-100 shadow-sm text-center">
               <Card.Body>
