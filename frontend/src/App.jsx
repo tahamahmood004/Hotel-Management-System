@@ -9,6 +9,7 @@ import Invoice from "./pages/Invoice";
 import Users from "./pages/Users";
 import Housekeeping from "./pages/Housekeeping";
 import Maintenance from "./pages/Maintenance";
+import Layout from "./components/Layout";
 
 function App() {
   return (
@@ -17,13 +18,56 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/rooms" element={<Rooms />} />
-          <Route path="/reservations" element={<Reservations />} />
-          <Route path="/invoices/:id" element={<Invoice />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/housekeeping" element={<Housekeeping />} />
-          <Route path="/maintenance" element={<Maintenance />} />
+          <Route path="/dashboard" element={
+            <Dashboard />} />
+          <Route
+            path="/rooms"
+            element={
+              <Layout>
+                <Rooms />
+              </Layout>
+            }
+          />
+          <Route
+            path="/reservations"
+            element={
+              <Layout>
+                <Reservations />
+              </Layout>
+            }
+          />
+          <Route
+            path="/invoices/:id"
+            element={
+              <Layout>
+                <Invoice />
+              </Layout>
+            }
+          />
+          <Route
+            path="/users"
+            element={
+              <Layout>
+                <Users />
+              </Layout>
+            }
+          />
+          <Route
+            path="/housekeeping"
+            element={
+              <Layout>
+                <Housekeeping />
+              </Layout>
+            }
+          />
+          <Route
+            path="/maintenance"
+            element={
+              <Layout>
+                <Maintenance />
+              </Layout>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
