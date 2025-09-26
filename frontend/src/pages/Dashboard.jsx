@@ -9,6 +9,7 @@ import {
   FaBroom,
   FaTools,
   FaSignOutAlt,
+  FaComments,
 } from "react-icons/fa";
 
 export default function Dashboard() {
@@ -52,13 +53,20 @@ export default function Dashboard() {
       action: () => navigate("/housekeeping"),
       variant: "warning",
       roles: ["admin", "receptionist"], // ✅ admin & receptionist
-
     },
     {
       title: "Maintenance",
       text: "Report and resolve maintenance issues.",
       icon: <FaTools size={40} className="mb-3 text-danger" />,
       action: () => navigate("/maintenance"),
+      variant: "danger",
+      roles: ["admin", "receptionist"], // ✅ admin & receptionist
+    },
+    {
+      title: "Feedbacks",
+      text: "View and manage guest feedback.",
+      icon: <FaComments size={40} className="mb-3 text-danger" />,
+      action: () => navigate("/feedbacks"),
       variant: "danger",
       roles: ["admin", "receptionist"], // ✅ admin & receptionist
     },
@@ -79,21 +87,21 @@ export default function Dashboard() {
 
       <Row xs={1} md={2} className="g-4">
         {cards
-        .filter((card) => card.roles.includes(user?.role)) // ✅ role filter
-        .map((card, idx) => (
-          <Col key={idx}>
-            <Card className="h-100 shadow-sm text-center">
-              <Card.Body>
-                {card.icon}
-                <Card.Title>{card.title}</Card.Title>
-                <Card.Text>{card.text}</Card.Text>
-                <Button variant={card.variant} onClick={card.action}>
-                  Go
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
+          .filter((card) => card.roles.includes(user?.role)) // ✅ role filter
+          .map((card, idx) => (
+            <Col key={idx}>
+              <Card className="h-100 shadow-sm text-center">
+                <Card.Body>
+                  {card.icon}
+                  <Card.Title>{card.title}</Card.Title>
+                  <Card.Text>{card.text}</Card.Text>
+                  <Button variant={card.variant} onClick={card.action}>
+                    Go
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
       </Row>
     </Container>
   );

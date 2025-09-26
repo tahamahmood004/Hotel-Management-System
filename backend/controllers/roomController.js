@@ -89,3 +89,13 @@ export const deleteRoom = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+export const getRoomById = async (req, res) => {
+  try {
+    const room = await Room.findById(req.params.id);
+    if (!room) return res.status(404).json({ error: "Room not found" });
+    res.json(room);
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+};

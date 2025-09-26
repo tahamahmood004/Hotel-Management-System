@@ -9,6 +9,7 @@ import Invoice from "./pages/Invoice";
 import Users from "./pages/Users";
 import Housekeeping from "./pages/Housekeeping";
 import Maintenance from "./pages/Maintenance";
+import Feedbacks from "./pages/Feedbacks";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -89,6 +90,17 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/feedbacks"
+            element={
+              <ProtectedRoute roles={["admin", "receptionist"]}>
+                <Layout>
+                  <Feedbacks />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+
           {/* Default route */}
           <Route path="*" element={<Login />} />
         </Routes>

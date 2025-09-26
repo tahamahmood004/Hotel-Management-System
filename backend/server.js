@@ -12,6 +12,8 @@ import invoiceRoutes from "./routes/invoiceRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import housekeepingRoutes from "./routes/housekeepingRoutes.js";
 import maintenanceRoutes from "./routes/maintenanceRoutes.js";
+import feedbackRoutes from "./routes/feedbackRoutes.js";
+
 
 
 
@@ -36,6 +38,8 @@ app.use("/api/invoices", invoiceRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/housekeeping", housekeepingRoutes);
 app.use("/api/maintenance", maintenanceRoutes);
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+app.use("/api/feedback", feedbackRoutes);
 
 // MongoDB Connection
 mongoose

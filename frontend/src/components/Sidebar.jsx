@@ -1,5 +1,5 @@
 import { Nav } from "react-bootstrap";
-import { FaBed, FaCalendarCheck, FaUsers, FaBroom, FaTools, FaSignOutAlt } from "react-icons/fa";
+import { FaBed, FaCalendarCheck, FaUsers, FaBroom, FaTools, FaSignOutAlt, FaComments } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
@@ -45,6 +45,9 @@ export default function Sidebar() {
             </Nav.Link>
             <Nav.Link onClick={() => navigate("/maintenance")} className="text-light">
               <FaTools className="me-2" /> Maintenance
+            </Nav.Link>
+              <Nav.Link onClick={() => navigate("/feedbacks")} className="text-light">
+              <FaComments className="me-2" /> Feedbacks
             </Nav.Link>
           </>
         )}
