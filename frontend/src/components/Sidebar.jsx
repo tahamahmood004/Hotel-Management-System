@@ -23,17 +23,19 @@ export default function Sidebar() {
     >
       <h4 className="text-center mb-4">Hotel Management System</h4>
       <Nav className="flex-column">
-        <Nav.Link onClick={() => navigate("/rooms")} className="text-light">
-          <FaBed className="me-2" /> Rooms
-        </Nav.Link>
         <Nav.Link onClick={() => navigate("/reservations")} className="text-light">
           <FaCalendarCheck className="me-2" /> Reservations
         </Nav.Link>
 
         {user?.role === "admin" && (
+          <>
+          <Nav.Link onClick={() => navigate("/rooms")} className="text-light">
+          <FaBed className="me-2" /> Rooms
+        </Nav.Link>
           <Nav.Link onClick={() => navigate("/users")} className="text-light">
             <FaUsers className="me-2" /> Users
           </Nav.Link>
+        </>
         )}
 
         {(user?.role === "admin" || user?.role === "receptionist") && (
@@ -50,7 +52,7 @@ export default function Sidebar() {
         <Nav.Link
           onClick={() => {
             logout();
-            navigate("/");
+            navigate("/login");
           }}
           className="text-danger mt-4"
         >

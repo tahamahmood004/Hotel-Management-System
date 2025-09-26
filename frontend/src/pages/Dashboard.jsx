@@ -17,7 +17,7 @@ export default function Dashboard() {
 
   const handleLogout = () => {
     logout();
-    navigate("/"); // ✅ redirect to login page after logout
+    navigate("/login"); // ✅ redirect to login page after logout
   };
 
   const cards = [

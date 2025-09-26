@@ -10,64 +10,87 @@ import Users from "./pages/Users";
 import Housekeeping from "./pages/Housekeeping";
 import Maintenance from "./pages/Maintenance";
 import Layout from "./components/Layout";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
+          {/* Public routes */}
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/dashboard" element={
-            <Dashboard />} />
+          {/* Protected routes */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/rooms"
             element={
-              <Layout>
-                <Rooms />
-              </Layout>
+              <ProtectedRoute roles={["admin", "receptionist"]}>
+                <Layout>
+                  <Rooms />
+                </Layout>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/reservations"
             element={
-              <Layout>
-                <Reservations />
-              </Layout>
+              <ProtectedRoute roles={["admin", "receptionist", "guest"]}>
+                <Layout>
+                  <Reservations />
+                </Layout>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/invoices/:id"
             element={
-              <Layout>
-                <Invoice />
-              </Layout>
+              <ProtectedRoute roles={["admin", "receptionist"]}>
+                <Layout>
+                  <Invoice />
+                </Layout>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/users"
             element={
-              <Layout>
-                <Users />
-              </Layout>
+              <ProtectedRoute roles={["admin"]}>
+                <Layout>
+                  <Users />
+                </Layout>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/housekeeping"
             element={
-              <Layout>
-                <Housekeeping />
-              </Layout>
+              <ProtectedRoute roles={["admin", "receptionist"]}>
+                <Layout>
+                  <Housekeeping />
+                </Layout>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/maintenance"
             element={
-              <Layout>
-                <Maintenance />
-              </Layout>
+              <ProtectedRoute roles={["admin", "receptionist"]}>
+                <Layout>
+                  <Maintenance />
+                </Layout>
+              </ProtectedRoute>
             }
           />
+          {/* Default route */}
+          <Route path="*" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

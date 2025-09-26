@@ -17,7 +17,7 @@ export default function Login() {
       login(res.data.user, res.data.token);
       // ✅ Redirect based on role
       if (res.data.user.role === "guest") {
-        navigate("/rooms");
+        navigate("/reservations");
       } else if (
         res.data.user.role === "admin" ||
         res.data.user.role === "receptionist"

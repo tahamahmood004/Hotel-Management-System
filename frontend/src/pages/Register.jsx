@@ -21,7 +21,7 @@ export default function Register() {
     try {
       await api.post("/auth/register", formData);
       alert("Registration successful! Please login.");
-      navigate("/");
+      navigate("/login");
     } catch (err) {
       alert("Registration failed.");
     }
