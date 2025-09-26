@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
 import api from "../api/axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -19,7 +21,7 @@ export default function Register() {
     try {
       await api.post("/auth/register", formData);
       alert("Registration successful! Please login.");
-      window.location.href = "/";
+      navigate("/");
     } catch (err) {
       alert("Registration failed.");
     }
